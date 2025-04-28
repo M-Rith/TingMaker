@@ -12,7 +12,6 @@ import "react-native-reanimated";
 import React from "react";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import "../global.css";
-import { SafeAreaView } from "react-native";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -40,7 +39,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tab)" options={{ headerShown: false }} />
-        <Stack.Screen name="details" />
+        <Stack.Screen name="+not-found" />
       </Stack>
 
       <StatusBar style="auto" />
