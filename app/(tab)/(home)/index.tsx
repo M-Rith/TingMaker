@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Link } from "expo-router";
-
+import { router } from "expo-router";
+import { Button } from "react-native";
 import React from "react";
 import { View } from "react-native";
 
@@ -15,8 +15,14 @@ export default function Index() {
         </ThemedText>
       </View>
 
-      <Link href={"/qrCodeGenerator"}>QrcodeGenerator</Link>
-      <Link href={"/removeBg"}>Remove BG</Link>
+      <Button
+        title="Go to QR Code Generator"
+        onPress={() => router.push("/qrCodeGenerator")}
+      />
+      <Button
+        title="Go to Remove BG"
+        onPress={() => router.push("/removeBg")}
+      />
     </ThemedView>
   );
 }
