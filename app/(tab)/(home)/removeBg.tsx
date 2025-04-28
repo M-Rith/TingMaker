@@ -1,10 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
-
-export default function QRCodeScreen() {
+export default function RemoveBg() {
   return (
     <View>
-      <Text> Hello world</Text>
+      <Text>Remove BG</Text>
     </View>
   );
 }
