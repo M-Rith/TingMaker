@@ -5,7 +5,7 @@ import { Button } from "react-native";
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import FunctionCard from "@/components/ui/functionCard";
-import { QrCodeIcon, SparklesIcon } from "react-native-heroicons/outline";
+import { QueueListIcon, Squares2X2Icon } from "react-native-heroicons/outline";
 export default function Index() {
   const [viewAsList, setViewAsList] = useState(false);
   return (
@@ -19,43 +19,28 @@ export default function Index() {
         </View>
 
         <ThemedText onPress={() => setViewAsList(!viewAsList)}>
-          {viewAsList === true ? "Row" : "List"}
+          {viewAsList === true ? (
+            <Squares2X2Icon color="#c1121f" />
+          ) : (
+            <QueueListIcon color="#c1121f" />
+          )}
         </ThemedText>
       </View>
 
-      {/* <View className={`flex ${viewAsList ? "flex-row" : "flex-col"} gap-5`}>
-        {[1, 2].map((item) => (
-          <View
-            key={item}
-            className={`shadow-sm border rounded-lg h-48 ${
-              viewAsList ? "w-1/2" : "w-full"
-            }`}
-          >
-            <View className="p-4 flex flex-col items-center justify-center h-full">
-              <ThemedText>Testing</ThemedText>
-              <ThemedText className="text-slate-600 leading-normal font-light">
-                Hello
-              </ThemedText>
-            </View>
-          </View>
-        ))}
-      </View> */}
-
       <View className={`flex ${viewAsList ? "flex-row" : "flex-col"} gap-5`}>
-        <View
-          className={`bg-blue-500 h-16 flex flex-col items-center justify-center ${
-            viewAsList && "flex-1"
-          }`}
-        >
-          <Text>I am here</Text>
-        </View>
-        <View
-          className={`bg-red-500 h-16 flex flex-col items-center justify-center ${
-            viewAsList && "flex-1"
-          }`}
-        >
-          <Text>I am here</Text>
-        </View>
+        <FunctionCard
+          title="QR Code Generate"
+          icon="qrcode"
+          link="/qrCodeGenerator"
+          viewAsList={viewAsList}
+        />
+
+        <FunctionCard
+          title="Remove Background"
+          icon="qrcode"
+          link="/removeBg"
+          viewAsList={viewAsList}
+        />
       </View>
     </ThemedView>
   );
