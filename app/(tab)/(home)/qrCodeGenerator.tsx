@@ -6,6 +6,7 @@ import * as MediaLibrary from "expo-media-library";
 import QRCode from "react-native-qrcode-svg";
 import Checkbox from "expo-checkbox";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "@/components/ThemedText";
 export default function QRCodeGenerator() {
   const viewRef = useRef(null);
   const [displayValue, setDisplayValue] = useState("");
@@ -27,7 +28,7 @@ export default function QRCodeGenerator() {
       <QRCode
         value={displayValue || "https://example.com"}
         size={200}
-        color={backgroundColor}
+        color={"#000000"}
         backgroundColor={transparentBackground ? "transparent" : "#ffffff"}
       />
     );
@@ -47,7 +48,11 @@ export default function QRCodeGenerator() {
       }
 
       // Capture the QR view
-      const uri = await viewRef.current.capture();
+      const uri = await viewRef.current.capture({
+        format: "png",
+        quality: 1,
+        transparent: transparentBackground,
+      });
 
       // Save to gallery
       await MediaLibrary.saveToLibraryAsync(uri);
@@ -78,18 +83,21 @@ export default function QRCodeGenerator() {
             }}
           />
 
-          <View className="flex-row items-center mb-4">
+          <View className="flex-row items-center">
             <Checkbox
               value={transparentBackground}
               onValueChange={setTransparentBackground}
               color="#c1121f"
             />
-            <Text className="ml-2">Transparent background</Text>
+            <ThemedText className="ml-2">Transparent background</ThemedText>
           </View>
 
           <TouchableOpacity
+            disabled={displayValue === ""}
             onPress={saveToGallery}
-            className="bg-green-500 p-3 rounded-md mb-4"
+            className={`p-3 rounded-md mt-5 ${
+              displayValue === "" ? "bg-[#c1121f]/50" : "bg-[#c1121f]"
+            }`}
           >
             <Text className="text-white text-center">Save QR Code</Text>
           </TouchableOpacity>
