@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { Button } from "react-native";
 import React, { useState } from "react";
 import { View, Text } from "react-native";
