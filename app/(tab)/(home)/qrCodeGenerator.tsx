@@ -22,14 +22,11 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 
-import Animated, { useSharedValue } from "react-native-reanimated";
-
 import ColorPicker, {
   Panel1,
   Swatches,
   OpacitySlider,
   HueSlider,
-  ColorFormatsObject,
 } from "reanimated-color-picker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function QRCodeGenerator() {
@@ -44,7 +41,7 @@ export default function QRCodeGenerator() {
 
   const [displayValue, setDisplayValue] = useState("");
   const [transparentBackground, setTransparentBackground] = useState(false);
-  const qrCodeColor = useSharedValue("#000000");
+  const [qrCodeColor, setQrCodeColor] = useState("#000000");
 
   // Add a separate color for the border that will be visible in both modes
   const backgroundColor = useThemeColor(
@@ -56,22 +53,17 @@ export default function QRCodeGenerator() {
     "text"
   );
 
-  const onColorSelect = (color: ColorFormatsObject) => {
-    "worklet";
-    qrCodeColor.value = color.hex;
-  };
-
   // Create a memoized QR code that updates when displayValue, transparentBackground, or qrCodeColor changes
   const StaticQRCode = useMemo(() => {
     return (
       <QRCode
         value={displayValue || "https://example.com"}
         size={200}
-        color={qrCodeColor.value}
+        color={qrCodeColor}
         backgroundColor={transparentBackground ? "transparent" : "#ffffff"}
       />
     );
-  }, [transparentBackground, qrCodeColor]);
+  }, [qrCodeColor]);
 
   const updateDisplayValue = (newValue: string) => {
     setDisplayValue(newValue);
@@ -106,7 +98,16 @@ export default function QRCodeGenerator() {
         >
           <View style={{ alignItems: "center", marginTop: 50 }}>
             <ViewShot ref={viewRef} options={{ format: "png", quality: 1 }}>
-              {StaticQRCode}
+              <View
+                style={{
+                  backgroundColor: transparentBackground
+                    ? "transparent"
+                    : "#ffffff",
+                  padding: 10,
+                }}
+              >
+                {StaticQRCode}
+              </View>
             </ViewShot>
 
             <View className="pt-10 w-full">
@@ -173,11 +174,13 @@ export default function QRCodeGenerator() {
                   </ThemedText>
 
                   <ColorPicker
-                    value={qrCodeColor.value}
+                    value={qrCodeColor}
                     sliderThickness={25}
                     thumbSize={24}
                     thumbShape="circle"
-                    onChangeJS={onColorSelect}
+                    onChangeJS={(color) => {
+                      setQrCodeColor(color.hex);
+                    }}
                     boundedThumb
                   >
                     <Panel1 style={styles.panelStyle} />
