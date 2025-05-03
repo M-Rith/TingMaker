@@ -28,17 +28,9 @@ import ColorPicker, {
 } from "reanimated-color-picker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PencilIcon } from "react-native-heroicons/outline";
-// import { facebookLogo } from "@/assets/images/facebook.png";
-// import { instagramLogo } from "@/assets/images/instagram.png";
-// import { twitterLogo } from "@/assets/images/twitter.png";
-// import { linkedinLogo } from "@/assets/images/linkedin.png";
-// import { youtubeLogo } from "@/assets/images/youtube.png";
-// import { tiktokLogo } from "@/assets/images/tik-tok.png";
-// import { FacebookLogo } from "../../../assets/images/facebook.png";
 import FacebookLogo from "@/assets/images/facebook.png";
 import InstagramLogo from "@/assets/images/instagram.png";
 import TwitterLogo from "@/assets/images/twitter.png";
-import LinkedInLogo from "@/assets/images/linkedin.png";
 import YouTubeLogo from "@/assets/images/youtube.png";
 import TikTokLogo from "@/assets/images/tik-tok.png";
 export default function QRCodeGenerator() {
@@ -58,6 +50,8 @@ export default function QRCodeGenerator() {
   const [activeTab, setActiveTab] = useState("color");
   // Add template state
   const [selectedTemplate, setSelectedTemplate] = useState(0);
+  const [selectedLogo, setSelectedLogo] = useState(null);
+
   const templates = [
     { name: "Basic", color: "#000000", showLogo: false },
     { name: "Corporate", color: "#0047AB", showLogo: true },
@@ -66,6 +60,7 @@ export default function QRCodeGenerator() {
   ];
 
   const logos = [
+    { name: "Choose from gallery", logo: null },
     { name: "Facebook", logo: FacebookLogo },
     { name: "Instagram", logo: InstagramLogo },
     { name: "Twitter", logo: TwitterLogo },
@@ -282,7 +277,7 @@ export default function QRCodeGenerator() {
                   </View>
                 ) : activeTab === "logo" ? (
                   <View className="flex flex-col py-4">
-                    <ThemedText className="mb-4 text-base">
+                    <ThemedText className="mb-4 text-base" type="description">
                       Choose a logo for your QR Code or you can upload your own
                       logo
                     </ThemedText>
@@ -292,11 +287,12 @@ export default function QRCodeGenerator() {
                         <TouchableOpacity
                           key={index}
                           className={`w-[48%] mb-4 p-3 rounded-lg ${
-                            selectedTemplate === index
+                            selectedLogo === index
                               ? "border-2 border-[#c1121f]"
                               : "border border-gray-300 dark:border-gray-600"
                           }`}
                           onPress={() => {
+                            setSelectedLogo(index);
                             // setSelectedTemplate(index);
                             // setQrCodeColor(logo.color);
                             // setShowLogo(template.showLogo);
@@ -309,7 +305,10 @@ export default function QRCodeGenerator() {
                                 className="w-full h-20 rounded-lg"
                               />
                             </View>
-                            <ThemedText className="text-center font-medium">
+                            <ThemedText
+                              className="text-center font-medium"
+                              type="description"
+                            >
                               {logo.name}
                             </ThemedText>
                           </View>
