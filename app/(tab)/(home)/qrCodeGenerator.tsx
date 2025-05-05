@@ -67,6 +67,7 @@ export default function QRCodeGenerator() {
     { name: "YouTube", logo: YouTubeLogo },
     { name: "TikTok", logo: TikTokLogo },
   ];
+  
   // Add a separate color for the border that will be visible in both modes
   const backgroundColor = useThemeColor(
     { light: "#F5F5F5", dark: "#121212" },
